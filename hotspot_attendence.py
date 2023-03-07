@@ -3,15 +3,14 @@ import time
 
 # Create a dictionary to keep track of the number of times each bench has been occupied
 benches = {}
-total_rows = 4
-total_columns = 6
+total_rows = 9
+total_columns = 5
 
 def scan_wifi_networks():
     devices = subprocess.check_output(['netsh', 'wlan', 'show', 'network'])
-    devices = devices.decode('ascii')
-    devices = devices.replace("\r", "")
+    devices = devices.decode('ascii','ignore') # Ignore needed to not crash program in cases of emoji SSIDs
+    devices = devices.replace("\r", "") 
     return devices
-
 
 
 def print_bench_matrix(benches):
@@ -46,6 +45,9 @@ while True:
     network_list = scan_wifi_networks()
 
     # print(network_list)
+    if network_list is None:
+        break
+
     network_list = network_list.split("\n")
 
     filtered_network_list = []
@@ -54,7 +56,9 @@ while True:
     for network in network_list:
         if network.startswith("SSID"):
             ssid = network.split(":")[1].strip()
-            if ssid.startswith("1BY"):
+
+            # if duplicate ssid, then don't add it to the list because wrongful allotment of bench
+            if ssid.startswith("1BY") and ssid not in filtered_network_list:
                 filtered_network_list.append(ssid)
 
                 bench_coordinate = int(ssid[-2:])
@@ -73,6 +77,7 @@ while True:
     for bench, count in benches.items():
         if count > 2:
          print("Possible attendance issue at bench", bench)
+         
         # if count == 0:
             # empty_benches += 1
     empty_benches = 0
@@ -106,4 +111,4 @@ while True:
     print("Absent students: ")
     print(absent_numbers)
 
-    time.sleep(5) # waits for 5 seconds before running the loop again
+    time.sleep(10) # waits for 5 seconds before running the loop again
