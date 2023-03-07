@@ -57,21 +57,29 @@ while True:
         if network.startswith("SSID"):
             ssid = network.split(":")[1].strip()
 
-            # if duplicate ssid, then don't add it to the list because wrongful allotment of bench
-            if ssid.startswith("1BY") and ssid not in filtered_network_list:
-                filtered_network_list.append(ssid)
+            if ssid.startswith("1BY") and len(ssid) >= 6:
+                 try:
+                    num_str = ssid[3:6]
+            #  Makes sure that even if the SSID is not in the correct format, the program will not crash
+                    num_int = int(num_str)
+                    if num_int >= 0:
+                        # if duplicate ssid, then don't add it to the list because wrongful allotment of bench
+                        if ssid.startswith("1BY") and ssid not in filtered_network_list:
+                            filtered_network_list.append(ssid)
 
-                bench_coordinate = int(ssid[-2:])
-                x = bench_coordinate // 10
-                y = bench_coordinate % 10
-                bench = (x, y)
-                # print("Bench Coordinate:", bench)
+                            bench_coordinate = int(ssid[-2:])
+                            x = bench_coordinate // 10
+                            y = bench_coordinate % 10
+                            bench = (x, y)
+                            # print("Bench Coordinate:", bench)
 
-                if bench in benches:
-                    benches[bench] += 1
-                else:
-                    benches[bench] = 1
+                            if bench in benches:
+                                benches[bench] += 1
+                            else:
+                                benches[bench] = 1
                 # print("Current bench occupancies:", benches)
+                 except ValueError:
+                    print(f"Warning: '{num_str}' is not a convertible integer, skipping...")
     
     # Check for any benches that have been occupied more than twice
     for bench, count in benches.items():
