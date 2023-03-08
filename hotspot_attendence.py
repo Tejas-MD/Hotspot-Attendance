@@ -21,7 +21,7 @@ def print_bench_matrix(benches):
         for j in range(total_columns):
             bench = (i+1, j+1)
             if bench in benches:
-                count = benches[bench]
+                count = benches[bench]['count']
                 if count == 1:
                     row.append("?")
                 elif count == 2:
