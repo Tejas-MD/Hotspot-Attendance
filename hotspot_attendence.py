@@ -90,17 +90,10 @@ while True:
                             # for bench, info in benches.items():
                                 # print(f"Bench {bench}: {info['count']} matching SSIDs = {info['ssids']}")
 
-                # print("Current bench occupancies:", benches)
                  except ValueError:
                     print(f"Warning: '{num_str}' is not a convertible integer, skipping...")
     
 
-    # Check for any benches that have been occupied more than twice
-    # for bench, info in benches.items():
-    #     if info['count'] > 2:
-    #         ssid_list = info['ssids']
-    #         print(f"Possible attendance issue at bench {bench}. SSIDs: {ssid_list}")
-         
 
     empty_benches = 0
 
