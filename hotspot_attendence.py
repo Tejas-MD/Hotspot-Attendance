@@ -74,20 +74,34 @@ while True:
                             # print("Bench Coordinate:", bench)
 
                             if bench in benches:
-                                benches[bench] += 1
+                                benches[bench]['count'] += 1
+                                benches[bench]['ssids'].append(ssid)
+                                # Raise error and clear SSIDs from attendance
+                                if benches[bench]['count'] > 2:
+                                    print(f"Possible attendance issue at bench {bench}. SSIDs: {benches[bench]['ssids']}")
+                                    for ssid in benches[bench]['ssids']:
+                                                if ssid in filtered_network_list:
+                                                    filtered_network_list.remove(ssid)
+                                    # benches[bench]['ssids'].clear()
                             else:
-                                benches[bench] = 1
+                                benches[bench] = {'count': 1, 'ssids': [ssid]}
+                            
+                            # Print the mapping between benches and matching SSIDs
+                            # for bench, info in benches.items():
+                                # print(f"Bench {bench}: {info['count']} matching SSIDs = {info['ssids']}")
+
                 # print("Current bench occupancies:", benches)
                  except ValueError:
                     print(f"Warning: '{num_str}' is not a convertible integer, skipping...")
     
+
     # Check for any benches that have been occupied more than twice
-    for bench, count in benches.items():
-        if count > 2:
-         print("Possible attendance issue at bench", bench)
+    # for bench, info in benches.items():
+    #     if info['count'] > 2:
+    #         ssid_list = info['ssids']
+    #         print(f"Possible attendance issue at bench {bench}. SSIDs: {ssid_list}")
          
-        # if count == 0:
-            # empty_benches += 1
+
     empty_benches = 0
 
     for i in range(total_rows):
