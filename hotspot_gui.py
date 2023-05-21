@@ -26,10 +26,6 @@ class AutoAttendanceSystem(QMainWindow):
         self.table.setRowCount(8)  # number of rows in the table
         self.table.horizontalHeader().hide()
         self.table.verticalHeader().hide()
-        # self.table.horizontalHeader().setFont(QFont("Times-New-Roman", 14))
-        # self.table.horizontalHeader().setStyleSheet("padding: 16px;")
-        # self.table.verticalHeader().setFont(QFont("Times-New-Roman", 14))
-        # self.table.verticalHeader().setStyleSheet("padding: 8px;")
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.setStyleSheet("background-color: white; color: #555; font-size: 14px; padding: 8px;")
@@ -52,12 +48,6 @@ class AutoAttendanceSystem(QMainWindow):
         self.lists_layout.addWidget(self.absent_label)
         self.lists_layout.addWidget(self.absent_list)
         self.main_layout.addLayout(self.lists_layout)
-
-        # # Add a QLabel to indicate the orientation of the table
-        # self.table_orientation_label = QLabel()
-        # self.table_orientation_label.setFixedSize(50, 50)
-        # self.table_orientation_label.setStyleSheet("background-color: black;")
-        # self.main_layout.addWidget(self.table_orientation_label)
 
         # Connect the "Start Scanning" button to the function that scans and updates the UI
         self.start_scanning_button.clicked.connect(self.scan_and_update_ui)
