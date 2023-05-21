@@ -1,4 +1,5 @@
 import subprocess
+# Import subprocess for Wi-Fi network scanning
 
 # Create a dictionary to keep track of the number of times each bench has been occupied
 benches = {}
@@ -7,6 +8,9 @@ total_columns = 5
 
 
 def scan_wifi_networks():
+
+    """Scans for available Wi-Fi networks and returns a list of their names."""
+
     devices = subprocess.check_output(['netsh', 'wlan', 'show', 'network'])
     devices = devices.decode('ascii','ignore') # Ignore needed to not crash program in cases of emoji SSIDs
     devices = devices.replace("\r", "") 
@@ -14,7 +18,14 @@ def scan_wifi_networks():
 
 
 def print_bench_matrix(benches):
-    # Create a matrix with 4 rows and 6 columns
+    """Prints a matrix of the students present at each bench.
+
+    Args:
+        benches: A dictionary that maps benches to the number of students present at each bench.
+
+    Returns:
+        None.
+    """
     matrix = []
     for i in range(total_rows):
         row = []
@@ -41,6 +52,14 @@ def print_bench_matrix(benches):
 
 
 def process_network_list(network_list):
+    """Processes a list of Wi-Fi networks and returns a dictionary that maps each network to a tuple of its coordinates.
+
+    Args:
+        network_list: A list of Wi-Fi networks.
+
+    Returns:
+        A dictionary that maps Wi-Fi networks to their coordinates.
+    """
     benches = {}
     filtered_network_list = []
     
@@ -82,6 +101,17 @@ def process_network_list(network_list):
     return benches, filtered_network_list
 
 def count_empty_benches(benches, total_rows, total_columns):
+    """Counts the number of empty benches in a dictionary that maps benches to the number of students present at each bench.
+
+    Args:
+        benches: A dictionary that maps benches to the number of students present at each bench.
+        total_rows: The total number of rows in the bench matrix.
+        total_columns: The total number of columns in the bench matrix.
+
+    Returns:
+        The number of empty benches.
+    """
+
     empty_benches = 0
     
     for i in range(total_rows):
@@ -97,10 +127,26 @@ def count_empty_benches(benches, total_rows, total_columns):
     return empty_benches
 
 def get_present_students(filtered_network_list):
+    """Returns a list of the students present in a list of Wi-Fi networks.
+
+    Args:
+        filtered_network_list: A list of Wi-Fi networks.
+
+    Returns:
+        A list of students present.
+    """
     three_char_list = [network[3:6] for network in filtered_network_list]
     return three_char_list
 
 def get_absent_students(three_char_list):
+    """Returns a list of the students absent in a list of Wi-Fi networks.
+
+    Args:
+        three_char_list: A list of Wi-Fi networks.
+
+    Returns:
+        A list of students absent.
+    """   
     three_char_int_list = [int(network) for network in three_char_list]
     
     absent_numbers = []
