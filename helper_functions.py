@@ -37,11 +37,10 @@ def print_bench_matrix(benches):
                     row.append("?")
                 elif count == 2:
                     row.append("✓")
-                # elif count == 0:
-                    # row.append("X")
+
             else:
                 row.append("X")
-                # empty_benches += 1
+                
 
         matrix.append(row)
 
